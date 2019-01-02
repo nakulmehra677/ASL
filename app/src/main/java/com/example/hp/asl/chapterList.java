@@ -27,19 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class chlist extends AppCompatActivity {
+public class chapterList extends AppCompatActivity {
 
     broadcast broadcast = new broadcast();
 
-    private static ProgressBar progressBar;
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private ProgressBar progressBar;
 
     private static List<post> chapter = new ArrayList<>();
-    private static MyAdapter mAdapter;
-
-    private FloatingActionButton fab;
+    private MyAdapter mAdapter;
 
     private static DatabaseReference databaseReference;
 
@@ -51,26 +46,24 @@ public class chlist extends AppCompatActivity {
         setContentView(R.layout.activity_chlist);
 
         progressBar = findViewById(R.id.indeterminateBar);
-
-        mRecyclerView = findViewById(R.id.my_recycler_view);
+        RecyclerView mRecyclerView = findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this);
+        // Setting up the recyclerView //
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
         mAdapter = new MyAdapter(chapter, this);
         mRecyclerView.setAdapter(mAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(chlist.this, add.class));
+                startActivity(new Intent(chapterList.this, add.class));
             }
         });
 
@@ -85,15 +78,15 @@ public class chlist extends AppCompatActivity {
                     }
                 }
         );
+        getData();
     }
 
-    static void getData() {
+    void getData() {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 progressBar.setVisibility(View.VISIBLE);
-
                 chapter.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     post p = d.getValue(post.class);
@@ -112,9 +105,7 @@ public class chlist extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        getData();
         super.onStart();
-
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(broadcast, filter);
     }
@@ -127,22 +118,20 @@ public class chlist extends AppCompatActivity {
 }
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
-    List<post> chapter;
+    private List<post> chapter;
     private Context context;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView identification, chapter_name;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
             chapter_name = view.findViewById(R.id.chapter_name);
             identification = view.findViewById(R.id.identification);
         }
     }
 
-    public MyAdapter(List<post> chapter, Context context) {
-
+    MyAdapter(List<post> chapter, Context context) {
         this.chapter = chapter;
         this.context = context;
     }
@@ -150,15 +139,12 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view, parent, false);
-
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-
         post post = chapter.get(position);
         holder.chapter_name.setText(post.getChapter_name());
         holder.identification.setText(post.getIdentification());
@@ -197,13 +183,5 @@ class post {
 
     public String getIdentification() {
         return identification;
-    }
-
-    public void setChapter_name(String chapter_name) {
-        this.chapter_name = chapter_name;
-    }
-
-    public void setIdentification(String identification) {
-        this.identification = identification;
     }
 }

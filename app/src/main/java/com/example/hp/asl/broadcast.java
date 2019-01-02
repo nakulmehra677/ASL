@@ -6,36 +6,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.constraint.ConstraintLayout;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class broadcast extends BroadcastReceiver {
 
     ConstraintLayout constraintLayout, no_internet;
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        constraintLayout = ((Activity) context).findViewById(R.id.chlist);
-        no_internet = ((Activity) context).findViewById(R.id.image);
+        constraintLayout = ((Activity) context).findViewById(R.id.parent_layout);
+        //View view = LayoutInflater.from(context).inflate(R.layout.no_internet, null);
+
+        View childView = constraintLayout.findViewById(R.id.main_content);
+        View childView2 = constraintLayout.findViewById(R.id.no_internet);
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-
             boolean noConnectivity = intent.getBooleanExtra(
-                    ConnectivityManager.EXTRA_NO_CONNECTIVITY, false
-            );
+                    ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+
             if (noConnectivity) {
-                constraintLayout.setVisibility(View.GONE);
-                no_internet.setVisibility(View.VISIBLE);
-
+                childView.setVisibility(View.GONE);
+                childView2.setVisibility(View.VISIBLE);
             } else {
-
-                chlist.getData();
-                constraintLayout.setVisibility(View.VISIBLE);
-                no_internet.setVisibility(View.GONE);
+                childView.setVisibility(View.VISIBLE);
+                childView2.setVisibility(View.GONE);
             }
         }
     }

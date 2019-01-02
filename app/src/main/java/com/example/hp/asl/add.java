@@ -1,5 +1,7 @@
 package com.example.hp.asl;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,7 @@ public class add extends AppCompatActivity implements View.OnClickListener {
     private boolean empty =false;
 
     private DatabaseReference databaseReference;
+    broadcast broadcast = new broadcast();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -260,6 +263,19 @@ public class add extends AppCompatActivity implements View.OnClickListener {
         if (TextUtils.isEmpty(s)) {
             empty = true;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(broadcast, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcast);
     }
 }
 

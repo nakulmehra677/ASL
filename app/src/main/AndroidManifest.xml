@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".chlist"
+        <activity android:name=".chapterList"
             android:label="Chapter list"></activity>
         <activity android:name=".add"
             android:label="Add chapter details" ></activity>

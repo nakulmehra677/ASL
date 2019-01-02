@@ -1,6 +1,8 @@
 package com.example.hp.asl;
 
+import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,8 @@ public class chapterDetail extends AppCompatActivity {
     private TextView textViewTitle, textViewIdentification, textViewExplanation;
     private ProgressBar progressBar;
     LinearLayout ruleLayout, exampleLayout;
+    broadcast broadcast = new broadcast();
+
 
     DatabaseReference databaseReference, rules_data, examples_data;
 
@@ -125,6 +129,19 @@ public class chapterDetail extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(broadcast, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcast);
     }
 }
 
