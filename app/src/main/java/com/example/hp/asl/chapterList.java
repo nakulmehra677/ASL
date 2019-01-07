@@ -1,5 +1,6 @@
 package com.example.hp.asl;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,9 +13,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,15 +34,16 @@ import java.util.List;
 public class chapterList extends AppCompatActivity {
 
     broadcast broadcast = new broadcast();
-
-    private ProgressBar progressBar;
-
+    @SuppressLint("StaticFieldLeak")
+    private static ProgressBar progressBar;
     private static List<post> chapter = new ArrayList<>();
-    private MyAdapter mAdapter;
-
+    @SuppressLint("StaticFieldLeak")
+    private static MyAdapter mAdapter;
     private static DatabaseReference databaseReference;
-
     SwipeRefreshLayout mySwipeRefreshLayout;
+
+    private boolean isScrolling = false;
+    private int currentItems, totalItems, scrolledOutItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,7 @@ public class chapterList extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // Setting up the recyclerView //
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mAdapter = new MyAdapter(chapter, this);
@@ -78,14 +83,36 @@ public class chapterList extends AppCompatActivity {
                     }
                 }
         );
+
         getData();
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                    isScrolling = true;
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = mLayoutManager.getChildCount();
+                totalItems = mLayoutManager.getItemCount();
+                scrolledOutItems = ((LinearLayoutManager) mLayoutManager).findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentItems + scrolledOutItems == totalItems)) {
+                    isScrolling = false;
+                    getData();
+                }
+            }
+        });
     }
 
-    void getData() {
-        ValueEventListener postListener = new ValueEventListener() {
+    static void getData() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(View.VISIBLE);
                 chapter.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
@@ -97,10 +124,10 @@ public class chapterList extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-        };
-        databaseReference.addListenerForSingleValueEvent(postListener);
+        });
+
     }
 
     @Override
@@ -144,7 +171,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         post post = chapter.get(position);
         holder.chapter_name.setText(post.getChapter_name());
         holder.identification.setText(post.getIdentification());
