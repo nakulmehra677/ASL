@@ -11,14 +11,20 @@
         android:layout_weight="1">
 
         <EditText
+            android:id="@+id/hindi_example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/hindi_example"/>
+            android:inputType="textCapSentences"
+            android:singleLine="true"
+            android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/english_example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/english_example"/>
+            android:inputType="textCapSentences"
+            android:singleLine="true"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/analytics"
+            android:title="Analytics" />
+
+        <item
+            android:id="@+id/appTheme"
+            android:title="App Theme" />
+
+        <item
+            android:id="@+id/share_app"
+            android:title="Share App" />
+
+
+        <item
+            android:id="@+id/give_feedback"
+            android:title="Give Feedback" />
+
+        <item
+            android:id="@+id/about_asl"
+            android:title="About ASL" />
+    </group>
+</menu>

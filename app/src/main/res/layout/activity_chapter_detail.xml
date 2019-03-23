@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".chapterDetail">
+    tools:context=".Activities.ChapterDetailActivity">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/main_content"
@@ -66,14 +66,14 @@
                         android:layout_marginVertical="5dp"
                         android:text="Identification"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/identification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -88,14 +88,14 @@
                         android:layout_marginVertical="5dp"
                         android:text="Explanation"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/expalanation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -112,7 +112,7 @@
                         android:layout_marginVertical="5dp"
                         android:text="Rules"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -121,6 +121,7 @@
                     android:id="@+id/exampleLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -130,7 +131,7 @@
                         android:layout_marginVertical="5dp"
                         android:text="Examples"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

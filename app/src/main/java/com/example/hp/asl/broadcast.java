@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 
-import static com.example.hp.asl.chapterList.getData;
+//import static com.example.hp.asl.Activities.ChapterListActivity.getData;
 
 public class broadcast extends BroadcastReceiver {
 
@@ -30,7 +30,7 @@ public class broadcast extends BroadcastReceiver {
                 childView.setVisibility(View.GONE);
                 childView2.setVisibility(View.VISIBLE);
             } else {
-                getData();
+                //getData();
                 childView.setVisibility(View.VISIBLE);
                 childView2.setVisibility(View.GONE);
             }

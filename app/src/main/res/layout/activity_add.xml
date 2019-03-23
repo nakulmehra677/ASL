@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".add">
+    tools:context=".Activities.UploadChapterActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/data"
             android:layout_weight="1">
 
             <LinearLayout
@@ -57,7 +58,7 @@
                         android:id="@+id/chapter_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:singleLine="true" />
 
                 </LinearLayout>
@@ -81,7 +82,7 @@
                         android:id="@+id/identification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:singleLine="true" />
 
                 </LinearLayout>
@@ -105,7 +106,7 @@
                         android:id="@+id/explanation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:singleLine="true" />
 
                 </LinearLayout>
