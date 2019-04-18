@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.hp.asl">
+    package="com.nakulmehra.hp.asl">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,22 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.SplashActivity">
+        <activity
+            android:name="com.nakulmehra.hp.asl.Activities.AboutASLActivity"
+            android:label="About ASL" />
+        <activity android:name="com.nakulmehra.hp.asl.Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/search"/>
         </activity>
         <activity
-            android:name=".Activities.ChapterListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Chapter list" />
+            android:name="com.nakulmehra.hp.asl.Activities.ChapterListActivity"
+            android:label="Chapter list"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.UploadChapterActivity"
-            android:label="Add chapter details" />
-        <activity
-            android:name=".Activities.ChapterDetailActivity"
+            android:name="com.nakulmehra.hp.asl.Activities.ChapterDetailActivity"
             android:label="Details" />
     </application>
 

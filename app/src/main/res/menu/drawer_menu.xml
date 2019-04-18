@@ -3,30 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/settings"
-            android:title="Settings" />
-
-        <item
-            android:id="@+id/analytics"
-            android:title="Analytics" />
-
-        <item
-            android:id="@+id/appTheme"
-            android:title="App Theme" />
-
+    <group>
         <item
             android:id="@+id/share_app"
+            android:icon="@drawable/ic_share_black_24dp"
             android:title="Share App" />
-
 
         <item
             android:id="@+id/give_feedback"
+            android:icon="@drawable/ic_feedback_black_24dp"
             android:title="Give Feedback" />
 
         <item
             android:id="@+id/about_asl"
+            android:icon="@drawable/ic_details_black_24dp"
             android:title="About ASL" />
     </group>
 </menu>
