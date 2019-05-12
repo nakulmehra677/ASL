@@ -16,6 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:textColor="?attr/textColor"
         android:id="@+id/identification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

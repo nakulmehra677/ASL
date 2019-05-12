@@ -1,10 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColor">@color/gray</item>
+        <item name="textColor2">@color/black</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+
+    <style name="darkAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColor">@color/white</item>
+        <item name="textColor2">@color/white</item>
+        <item name="backgroundColor">@color/grayBackground</item>
     </style>
 
     <style name="ProgressBar">

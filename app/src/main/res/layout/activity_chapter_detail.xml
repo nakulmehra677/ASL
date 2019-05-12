@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/backgroundColor"
     tools:context=".Activities.ChapterDetailActivity">
 
     <android.support.constraint.ConstraintLayout
@@ -73,6 +74,7 @@
                         android:id="@+id/identification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="?attr/textColor"
                         android:textSize="17dp" />
                 </LinearLayout>
 
@@ -95,6 +97,7 @@
                         android:id="@+id/expalanation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="?attr/textColor"
                         android:textSize="17dp" />
 
                 </LinearLayout>

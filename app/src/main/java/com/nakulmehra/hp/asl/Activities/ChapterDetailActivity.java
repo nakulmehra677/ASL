@@ -28,6 +28,9 @@ public class ChapterDetailActivity extends BaseActictivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setTheme(R.style.darkAppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_detail);
 

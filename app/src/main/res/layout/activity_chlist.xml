@@ -32,6 +32,7 @@
             android:layout_height="match_parent">
 
             <ProgressBar
+                android:elevation="1dp"
                 android:id="@+id/indeterminateBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
                         android:id="@+id/my_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?attr/backgroundColor"
                         android:scrollbars="vertical" />
 
                 </android.support.v4.widget.SwipeRefreshLayout>
@@ -83,6 +85,47 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_drawer_header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="12dp"
+            android:orientation="vertical"
+            android:layout_marginVertical="16dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="8dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="Night mode"
+                    android:textColor="?attr/textColor2"
+                    android:textSize="18dp" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/night_mode_switch"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,6 +1,7 @@
 package com.nakulmehra.hp.asl.Activities;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
@@ -9,16 +10,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.support.v7.widget.Toolbar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.nakulmehra.hp.asl.Adapters.ChapterListItemAdapter;
@@ -45,6 +48,10 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private LinearLayoutManager mLayoutManager;
+    private static Bundle mBundleRecyclerViewState;
+    private Switch nightModeSwitch;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private SwitchCompat drawerSwitch;
 
     private ChapterListManager chapterListManager;
     List<ChapterListItem> chapterList = new ArrayList<>();
@@ -53,6 +60,10 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.darkAppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chlist);
 
@@ -62,6 +73,8 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.parent_layout);
         navigationView = findViewById(R.id.nav_view);
+        mySwipeRefreshLayout = findViewById(R.id.swiperefresh);
+        drawerSwitch = findViewById(R.id.night_mode_switch);
 
         setSupportActionBar(toolbar);
         recyclerView.setHasFixedSize(true);
@@ -77,7 +90,11 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        mySwipeRefreshLayout = findViewById(R.id.swiperefresh);
+        chapterListManager = new ChapterListManager(this);
+        mAdapter = new ChapterListItemAdapter(chapterList, ChapterListActivity.this);
+        recyclerView.setAdapter(mAdapter);
+        getLastChapterName();
+
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -107,6 +124,18 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
                 }
             }
         });
+
+        drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.i("TAGG", "Night mode ON");
+                } else {
+                    Log.i("TAGG", "Night mode OFF");
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
     }
 
     public void getData() {
@@ -118,21 +147,36 @@ public class ChapterListActivity extends BaseActictivity implements NavigationVi
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        chapterListManager = new ChapterListManager(this);
-        mAdapter = new ChapterListItemAdapter(chapterList, ChapterListActivity.this);
-        recyclerView.setAdapter(mAdapter);
-        getLastChapterName();
-    }
-
-    @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i("TAGG", "ChapterListActivity onPause()");
+
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.i("TAGG", "ChapterListActivity onResume()");
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
     }
 
     /*@Override
